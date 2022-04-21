@@ -18,6 +18,8 @@
 
 package org.magmafoundation.magma;
 
+import net.minecraftforge.server.permission.PermissionAPI;
+import org.magmafoundation.magma.commands.permission.BukkitPermissionsHandler;
 import org.magmafoundation.magma.configuration.MagmaConfig;
 import org.magmafoundation.magma.modPatcher.ModPatcherManager;
 import org.magmafoundation.magma.patcher.PatcherManager;
@@ -45,6 +47,7 @@ public class Magma {
         if (System.getProperty("log4j.configurationFile") == null) {
             System.setProperty("log4j.configurationFile", "log4j2_magma.xml");
         }
+
     }
 
     public static Magma getInstance() {

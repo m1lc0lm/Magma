@@ -102,7 +102,7 @@
          ItemStackHolderInjector.INSTANCE.inject();
 +        // Magma - Allow bukkit plugins to handle forge commands
 +        if (MagmaConfig.instance.forgeBukkitPermissionHandlerEnable.getValues()) {
-+            PermissionAPI.setPermissionHandler(new BukkitPermissionsHandler());
++            PermissionAPI.setPermissionHandler(new BukkitPermissionsHandler(), true);
 +        }
          modController.transition(LoaderState.INITIALIZATION, false);
          progressBar.step("Initializing Minecraft Engine");

@@ -1,0 +1,52 @@
+--- ../src-base/minecraft/net/minecraftforge/server/permission/PermissionAPI.java
++++ ../src-work/minecraft/net/minecraftforge/server/permission/PermissionAPI.java
+@@ -22,6 +22,7 @@
+ import com.google.common.base.Preconditions;
+ import com.mojang.authlib.GameProfile;
+ import net.minecraft.entity.player.EntityPlayer;
++import net.minecraftforge.event.terraingen.OreGenEvent;
+ import net.minecraftforge.fml.common.FMLLog;
+ import net.minecraftforge.fml.common.Loader;
+ import net.minecraftforge.fml.common.LoaderState;
+@@ -33,19 +34,40 @@
+ 
+ public class PermissionAPI
+ {
++
++    private static boolean locked = false; // prevent double-initialization
+     private static IPermissionHandler permissionHandler = DefaultPermissionHandler.INSTANCE;
+ 
++
+     /**
+      * <b>Only use this in PreInit state!</b>
+      */
+-    public static void setPermissionHandler(IPermissionHandler handler)
++    public static void setPermissionHandler(IPermissionHandler permissionHandler) {
++        setPermissionHandler(permissionHandler, false);
++    }
++
++    /**
++     * <b>Only use this in PreInit state!</b>
++     */
++    public static void setPermissionHandler(IPermissionHandler handler, boolean lock)
+     {
++        //Magma Start - Prevent changing handler after it has been locked
++        if(locked) {
++            FMLLog.log(Level.WARN, "Permission handler can't be changed after it has been locked!");
++            return;
++        }
++        //Magma End
+         Preconditions.checkNotNull(handler, "Permission handler can't be null!");
+         Preconditions.checkState(Loader.instance().getLoaderState().ordinal() <= LoaderState.PREINITIALIZATION.ordinal(), "Can't register after IPermissionHandler PreInit!");
+         FMLLog.log.warn("Replacing {} with {}", permissionHandler.getClass().getName(), handler.getClass().getName());
+         permissionHandler = handler;
++        locked = lock; //Magma - Lock the handler
+     }
+ 
++    public static void unlock(){
++        locked = false;
++    } //Magma - Unlock the handler so it can be changed again
++
+     public static IPermissionHandler getPermissionHandler()
+     {
+         return permissionHandler;
