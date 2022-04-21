@@ -1,10 +1,9 @@
 --- ../src-base/minecraft/net/minecraft/server/MinecraftServer.java
 +++ ../src-work/minecraft/net/minecraft/server/MinecraftServer.java
-@@ -1,7 +1,11 @@
+@@ -1,7 +1,10 @@
  package net.minecraft.server;
  
 +import co.aikar.timings.MinecraftTimings;
-+import co.aikar.timings.Timing;
 +import co.aikar.timings.TimingsManager;
 +import com.destroystokyo.paper.utils.CachedSizeConcurrentLinkedQueue;
  import com.google.common.collect.Lists;
@@ -13,7 +12,7 @@
  import com.google.common.util.concurrent.Futures;
  import com.google.common.util.concurrent.ListenableFuture;
  import com.google.common.util.concurrent.ListenableFutureTask;
-@@ -15,93 +19,112 @@
+@@ -15,93 +18,113 @@
  import io.netty.handler.codec.base64.Base64;
  import java.awt.GraphicsEnvironment;
  import java.awt.image.BufferedImage;
@@ -45,7 +44,6 @@
  import net.minecraft.advancements.AdvancementManager;
  import net.minecraft.advancements.FunctionManager;
 +import net.minecraft.block.Block;
-+import net.minecraft.client.Minecraft;
  import net.minecraft.command.CommandBase;
  import net.minecraft.command.ICommandManager;
  import net.minecraft.command.ICommandSender;
@@ -108,6 +106,8 @@
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
 +import net.minecraftforge.registries.GameData;
++import net.minecraftforge.server.permission.DefaultPermissionHandler;
++import net.minecraftforge.server.permission.DefaultPermissionLevel;
  import org.apache.commons.lang3.Validate;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -123,6 +123,8 @@
 +import org.bukkit.craftbukkit.v1_12_R1.scoreboard.CraftScoreboardManager;
 +import org.bukkit.craftbukkit.v1_12_R1.util.ServerShutdownThread;
 +import org.bukkit.entity.EntityType;
++import org.bukkit.permissions.Permission;
++import org.bukkit.permissions.PermissionDefault;
 +import org.bukkit.potion.PotionEffectType;
 +import org.magmafoundation.magma.Magma;
 +import org.magmafoundation.magma.Metrics;
@@ -138,8 +140,6 @@
 -public abstract class MinecraftServer implements ICommandSender, Runnable, IThreadListener, ISnooperInfo
 -{
 -    private static final Logger LOGGER = LogManager.getLogger();
-+//import jline.console.ConsoleReader;
-+
 +public abstract class MinecraftServer implements ICommandSender, Runnable, IThreadListener, ISnooperInfo {
 +    public static final Logger LOGGER = LogManager.getLogger();
      public static final File USER_CACHE_FILE = new File("usercache.json");
