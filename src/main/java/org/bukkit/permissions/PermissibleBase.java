@@ -74,17 +74,17 @@ public class PermissibleBase implements Permissible {
         // Paper start
         PermissionAttachmentInfo info = permissions.get(name);
         if (info != null) {
-            FMLLog.severe("1 | Permission %s is registered", name);
+            FMLLog.info("1 | Permission %s is registered", name);
             return info.getValue();
             // Paper end
         } else {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
 
             if (perm != null) {
-                FMLLog.severe("2 | Permission %s is registered", name);
+                FMLLog.info("2 | Permission %s is registered", name);
                 return perm.getDefault().getValue(isOp());
             } else {
-                FMLLog.severe("3 | Permission %s not registered", name);
+                FMLLog.info("3 | Permission %s not registered", name);
                 return Permission.DEFAULT_PERMISSION.getValue(isOp());
             }
         }
@@ -100,12 +100,12 @@ public class PermissibleBase implements Permissible {
         // Paper start
         PermissionAttachmentInfo info = permissions.get(name);
         if (info != null) {
-            FMLLog.severe("1 | Permission %s is registered", name);
+            FMLLog.info("11 | Permission %s is registered", name);
             return info.getValue();
         }
         // Paper end
 
-        FMLLog.severe("2 | Permission %s is not registered", name);
+        FMLLog.info("21 | Permission %s is not registered", name);
         return perm.getDefault().getValue(isOp());
     }
 
