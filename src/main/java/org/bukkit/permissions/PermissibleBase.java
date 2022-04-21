@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
+
+import net.minecraftforge.fml.common.FMLLog;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.magmafoundation.magma.MagmaCorePlugin;
 
 /**
  * Base Permissible for use in any Permissible object via proxy or extension
@@ -71,14 +74,17 @@ public class PermissibleBase implements Permissible {
         // Paper start
         PermissionAttachmentInfo info = permissions.get(name);
         if (info != null) {
+            FMLLog.severe("1 | Permission %s is registered", name);
             return info.getValue();
             // Paper end
         } else {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
 
             if (perm != null) {
+                FMLLog.severe("2 | Permission %s is registered", name);
                 return perm.getDefault().getValue(isOp());
             } else {
+                FMLLog.severe("3 | Permission %s not registered", name);
                 return Permission.DEFAULT_PERMISSION.getValue(isOp());
             }
         }
@@ -94,9 +100,12 @@ public class PermissibleBase implements Permissible {
         // Paper start
         PermissionAttachmentInfo info = permissions.get(name);
         if (info != null) {
-                return info.getValue();
+            FMLLog.severe("1 | Permission %s is registered", name);
+            return info.getValue();
         }
         // Paper end
+
+        FMLLog.severe("2 | Permission %s is not registered", name);
         return perm.getDefault().getValue(isOp());
     }
 
