@@ -24,7 +24,7 @@ jobs:
           submodules: recursive
       - uses: gradle/wrapper-validation-action@v1.0.3
       - run: chmod +x ./gradlew
-      - run: ./gradlew outputJar githubRelease --parallel
+      - run: ./gradlew outputJar --parallel
         env:
           STABLE_BUILD: 0
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
