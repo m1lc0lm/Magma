@@ -9,10 +9,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraftforge.fml.common.FMLLog;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.magmafoundation.magma.MagmaCorePlugin;
 
 /**
  * Base Permissible for use in any Permissible object via proxy or extension
