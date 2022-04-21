@@ -22,8 +22,11 @@ import com.mojang.authlib.GameProfile;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
+import jdk.internal.net.http.common.Log;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.IPermissionHandler;
@@ -44,6 +47,7 @@ public class BukkitPermissionsHandler implements IPermissionHandler {
         Permission permission = new Permission(node, desc, fromForge(level));
         DefaultPermissions.registerPermission(permission, false);
         registeredNodes.put(node, permission);
+        Logger.getLogger("Perm").log(Level.ALL, "Registered permission node: " + node);
     }
 
     @Override
@@ -54,6 +58,7 @@ public class BukkitPermissionsHandler implements IPermissionHandler {
     @Override
     public boolean hasPermission(GameProfile profile, String node, @Nullable IContext context) {
         Player player = Bukkit.getServer().getPlayer(profile.getId());
+        Logger.getLogger("Perm").log(Level.ALL, "Checking permission node: " + node);
         return player != null && player.hasPermission(node);
     }
 

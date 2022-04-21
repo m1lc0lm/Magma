@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.minecraftforge.fml.common.FMLLog;
 import org.bukkit.Bukkit;
@@ -74,17 +75,17 @@ public class PermissibleBase implements Permissible {
         // Paper start
         PermissionAttachmentInfo info = permissions.get(name);
         if (info != null) {
-            FMLLog.info("1 | Permission %s is registered", name);
+            Logger.getLogger("Perm").log(Level.ALL, "1 | Permission %s is registered", name);
             return info.getValue();
             // Paper end
         } else {
             Permission perm = Bukkit.getServer().getPluginManager().getPermission(name);
 
             if (perm != null) {
-                FMLLog.info("2 | Permission %s is registered", name);
+                Logger.getLogger("Perm").log(Level.ALL, "2 | Permission %s is registered", name);
                 return perm.getDefault().getValue(isOp());
             } else {
-                FMLLog.info("3 | Permission %s not registered", name);
+                Logger.getLogger("Perm").log(Level.ALL, "3 | Permission %s not registered", name);
                 return Permission.DEFAULT_PERMISSION.getValue(isOp());
             }
         }
@@ -100,12 +101,12 @@ public class PermissibleBase implements Permissible {
         // Paper start
         PermissionAttachmentInfo info = permissions.get(name);
         if (info != null) {
-            FMLLog.info("11 | Permission %s is registered", name);
+            Logger.getLogger("Perm").log(Level.ALL, "11 | Permission %s is registered", name);
             return info.getValue();
         }
         // Paper end
 
-        FMLLog.info("21 | Permission %s is not registered", name);
+        Logger.getLogger("Perm").log(Level.ALL, "21 | Permission %s is not registered", name);
         return perm.getDefault().getValue(isOp());
     }
 
